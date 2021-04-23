@@ -23,6 +23,7 @@ local torrentList=($(curl -s "https://apibay.org/q.php?q=$myQuery&cat=100,200,30
                      sub("Ã¦"; "æ"; "g") |
                      sub("Ã˜"; "Ø"; "g") |
                      sub("^ "; ""; "g") |
+                     sub("Ã©"; "é"; "g") |
                      sub("\t"; ""; "g") |
                      sub("&Atilde;&cedil;"; "ø"; "g") |
                      sub("&hellip;"; "…"; "g") |
