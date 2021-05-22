@@ -1,3 +1,19 @@
+# we find out whether we are on Mac or Linux
+case $OSTYPE in
+     darwin*)
+    # we assume you use Transmission
+    file_opener=("open" "-a<" "/Applications/Transmission.app")
+    clipboard="pbpaste"
+        ;;
+    linux-gnu)
+    file_opener="xdg-open"
+    clipboard="wl-copy"
+        ;;
+     *)
+    printf "Your platform is not supported. Please open an issue"
+    return 1
+        ;;
+esac
 
 magnetizer() {
     local IFS='│'
