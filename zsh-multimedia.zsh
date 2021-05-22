@@ -2,7 +2,7 @@
 case $OSTYPE in
      darwin*)
     # we assume you use Transmission
-    file_opener=("open" "-a<" "/Applications/Transmission.app")
+    file_opener=("open" "-a" "/Applications/Transmission.app")
     clipboard="pbpaste"
         ;;
     linux-gnu)
