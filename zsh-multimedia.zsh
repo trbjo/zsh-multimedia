@@ -23,7 +23,8 @@ magnetizer() {
     done <<< "$@"
 }
 
-torrent() {
+alias torrent='noglob _torrent'
+_torrent() {
     setopt localoptions pipefail no_aliases 2> /dev/null
     local myQuery categories
     for arg in "$@"; do
