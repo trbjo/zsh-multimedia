@@ -59,13 +59,13 @@ _torrent() {
                 export __sort_order="size"
                 ;;
             (*)
-                myQuery+="${myQuery:+%20}$arg"
+                myQuery+="${myQuery:+ }$arg"
                 ;;
             esac
     done
     [ -z $categories ] && categories="100,200,300,400,600"
     local IFS=$'\n'
-    local torrentList=($(curl -s "https://apibay.org/q.php?q=${myQuery}&cat=${categories}" |\
+    local torrentList=($(curl -s "https://apibay.org/q.php?q=${${myQuery%%[[:blank:]]##}// /%20}&cat=${categories}" |\
                          jq -r 'if env.__sort_order != null then (
                          if env.__sort_order == "date" then (. | sort_by(.added)) elif
                          env.__sort_order == "size" then (.[].size |= tonumber | . | sort_by(.size)) elif
