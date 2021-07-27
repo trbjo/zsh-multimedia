@@ -59,7 +59,7 @@ _torrent() {
                 export __sort_order="size"
                 ;;
             (*)
-                myQuery+="${myQuery:+ }$arg"
+                myQuery+="${myQuery:+%20}$arg"
                 ;;
             esac
     done
