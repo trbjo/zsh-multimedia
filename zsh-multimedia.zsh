@@ -1,15 +1,15 @@
 # we find out whether we are on Mac or Linux
 case $OSTYPE in
-     darwin*)
-    # we assume you use Transmission
-    file_opener=("open" "-a" "/Applications/Transmission.app")
-    clipboard="pbpaste"
+     (darwin*)
+        # we assume you use Transmission
+        file_opener=("open" "-a" "/Applications/Transmission.app")
+        clipboard="pbpaste"
         ;;
-    linux-gnu)
-    file_opener="xdg-open"
-    clipboard="wl-copy"
+    (linux-gnu)
+        file_opener="xdg-open"
+        clipboard="wl-copy"
         ;;
-     *)
+     (*)
     printf "Your platform is not supported. Please open an issue"
     return 1
         ;;
@@ -29,38 +29,16 @@ _torrent() {
     local myQuery categories
     for arg in "$@"; do
         case "${arg#*--}" in
-            (music|audio)
-                categories="${categories:+,}100"
-                ;;
-            (video|movie)
-                categories="${categories:+,}200"
-                ;;
-            (software)
-                categories="${categories:+,}300"
-                ;;
-            (game)
-                categories="${categories:+,}400"
-                ;;
-            (porn)
-                categories="${categories:+,}500"
-                ;;
-            (uploaded|added|date)
-                export __sort_order="date"
-                ;;
-            (leechers)
-                export __sort_order="leechers"
-                ;;
-            (seeders)
-                ;;
-            (files)
-                export __sort_order="files"
-                ;;
-            (size)
-                export __sort_order="size"
-                ;;
-            (*)
-                myQuery+="${myQuery:+ }$arg"
-                ;;
+            (music|audio) categories="${categories:+,}100";;
+            (video|movie) categories="${categories:+,}200";;
+            (software) categories="${categories:+,}300";;
+            (game) categories="${categories:+,}400";;
+            (porn) categories="${categories:+,}500";;
+            (uploaded|added|date) export __sort_order="date";;
+            (leechers) export __sort_order="leechers";;
+            (seeders) ;; (files) export __sort_order="files";;
+            (size) export __sort_order="size";;
+            (*) myQuery+="${myQuery:+ }$arg";;
             esac
     done
     [ -z $categories ] && categories="100,200,300,400,600"
