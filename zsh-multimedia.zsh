@@ -19,7 +19,7 @@ magnetizer() {
     local IFS='│'
     while read -r name seeders leechers size files uploaded category imdb id hash
     do
-        printf %s "magnet:?xt=urn:btih:${hash: -40}&dn=${${name%%[[:blank:]]##}// /%20}&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A6969&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969&tr=udp%3A%2F%2F46.148.18.250%3A2710&tr=udp%3A%2F%2Fopentrackr.org%3A1337"
+        printf %s "magnet:?xt=urn:btih:${hash: -40}&dn=${${${name%%[[:blank:]]##}// /%20}//&/%26}&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A6969&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969&tr=udp%3A%2F%2F46.148.18.250%3A2710&tr=udp%3A%2F%2Fopentrackr.org%3A1337"
     done <<< "$@"
 }
 
