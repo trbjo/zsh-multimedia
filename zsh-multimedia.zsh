@@ -36,7 +36,8 @@ _torrent() {
             (porn) categories="${categories:+,}500";;
             (uploaded|added|date) export __sort_order="date";;
             (leechers) export __sort_order="leechers";;
-            (seeders) ;; (files) export __sort_order="files";;
+            (seeders) ;;
+            (files) export __sort_order="files";;
             (size) export __sort_order="size";;
             (*) myQuery+="${myQuery:+ }$arg";;
             esac
@@ -119,7 +120,7 @@ _torrent() {
                          "\(.name)│\(.seeders)│\(.leechers)│\(.size[0]).\(.size[1][0:2]) \(.Unit)│\(.num_files)│\(.added[0:10])│\(.category)│\(.hasIMDB)│\(.imdb)│\(.info_hash)"' |\
                          column -s '│' -t --table-columns "Results for $(print -n '\033[3m')${myQuery}$(print -n '\033[0m')",Seeders,Leechers,Size,Files,Uploaded,Category,"IMDB (C-/)" \
                          --output-separator " │     " --table-right Seeders,Leechers,Size,Files,Uploaded,Category,"IMDB (C-/)" |\
-                         fzf --exit-0 --multi --reverse --inline-info --ansi --expect=alt-w --prompt="  " \
+                         fzf --no-sort --exit-0 --multi --reverse --inline-info --ansi --expect=alt-w --prompt="  " \
                          --bind "ctrl-_:execute-silent(if [[ {8} == "✓" ]]; then xdg-open https://www.imdb.com/title/{9}/; fi)" \
                          --color='header:bold:underline:8' --no-preview \
                          --nth=1 --with-nth=1..8 --delimiter="│" \
