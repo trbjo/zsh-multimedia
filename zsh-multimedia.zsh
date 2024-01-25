@@ -15,7 +15,7 @@ case $OSTYPE in
         ;;
 esac
 
-
+column_separator='│'
 
 magnetizer() {
     unset IFS
@@ -28,7 +28,7 @@ magnetizer() {
     local trackerstring
     for tracker in $trackers; trackerstring+="&tr=$tracker"
 
-    local IFS='│'
+    local IFS=$column_separator
     while read -r name seeders leechers size files uploaded category imdb id hash
     do
         [[ -z $hash ]] && continue
@@ -185,8 +185,14 @@ _torrent() {
         print "Got zero results for \"${query[*]}\" in the categories ${commacategories_pretty}"
         return 0
     fi
+    cyan=$'\x1b[36m'
+    reset=$'\x1b[0m'
+    bold=$'\x1b[1m'
+    italic=$'\x1b[3m'
+    white=$'\x1b[37m'
+    colorcolumn="${white}${column_separator}${reset}"
 
-    local columns=$(column -s '│' -t --table-columns "Results for $(print -n '\033[3m')${query[*]}$(print -n '\033[0m') in categories: $(join_arr ' ' ${(@k)selected_cats})",Seeders,Leechers,Size,Files,Uploaded,Category,"IMDB (C-/)"  --output-separator " │     " --table-right Seeders,Leechers,Size,Files,Uploaded,Category,"IMDB (C-/)" <<< $parsed)
+    local columns=$(column -s "$column_separator" -t --table-columns "Results for $italic${query[*]}$reset in categories: $(join_arr ' ' ${(@k)selected_cats})",Seeders,Leechers,Size,Files,Uploaded,Category,"IMDB (C-/)"  --output-separator " $colorcolumn     "  --table-right Seeders,Leechers,Size,Files,Uploaded,Category,"IMDB (C-/)" <<< $parsed)
 
     local IFS=$'\n'
 
@@ -201,7 +207,7 @@ _torrent() {
                                     --no-preview \
                                     --nth=1 \
                                     --with-nth=1..8 \
-                                    --delimiter="│" \
+                                    --delimiter="$colorcolumn" \
                                     --header-lines=1 <<< $columns))
 
 
