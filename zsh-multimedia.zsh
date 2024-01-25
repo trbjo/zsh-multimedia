@@ -6,7 +6,7 @@ case $OSTYPE in
         clipboard="pbpaste"
         ;;
     (linux-gnu)
-        file_opener="xdg-open"
+        file_opener=("xdg-open")
         clipboard=("wl-copy" "-n")
         ;;
      (*)
@@ -224,7 +224,7 @@ _torrent() {
             $clipboard <<< $magnets
             ;;
         (*)
-            ($file_opener ${magnets} &) > /dev/null 2>&1
+            $file_opener ${magnets}
             ;;
     esac
     return 0
